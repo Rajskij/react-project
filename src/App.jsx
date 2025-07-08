@@ -1,13 +1,13 @@
 import { ThemeProvider } from "./components/ui/theme-provider"
-import { ModeToggle } from "./components/ModeToggle"
+import { ModeToggle } from "./components/mode-toggle"
+import Main from "./pages/main"
 
 function App() {
 
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <ModeToggle />
-        <h1>Vite + React</h1>
+        <Main />
       </ThemeProvider>
     </>
   )
