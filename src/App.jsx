@@ -10,6 +10,7 @@ import SearchResults from "@/components/search-results.jsx";
 
 function App() {
   const [pageName, setPageName] = useState('Page Not Found');
+  const [response, setResponse] = useState(null);
 
   return (
     <>
@@ -19,8 +20,8 @@ function App() {
             <Routes>
               <Route path="/" element={
                 <>
-                  <SearchForm setPageName={setPageName} />
-                  <SearchResults response={mockResponse} genres={genres} />
+                  <SearchForm setPageName={setPageName} setResponse={setResponse} />
+                  {response && <SearchResults response={response} genres={genres} />}
                 </>
               } />
               <Route path="*" element={
