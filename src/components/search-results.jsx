@@ -1,5 +1,23 @@
+import { Heart } from "lucide-react";
+import { Button } from "@/components/ui/button"
+import { useRef, useState } from "react";
+
 function SearchResults({ response, genres }) {
     const truncate = (str, max = 150) => str.length > max ? str.slice(0, max) + "..." : str;
+    const [selectedMovies, setSelectedMovies] = useState(new Set());
+
+    function handleClick(movieId) {
+        setSelectedMovies(prev => {
+            const newSelection = new Set(prev);
+            if (newSelection.has(movieId)) {
+                newSelection.delete(movieId);
+            } else {
+                newSelection.add(movieId);
+                localStorage.getItem('favorite') || []
+            }
+            return newSelection;
+        });
+    }
 
     return (
         <>
@@ -12,7 +30,15 @@ function SearchResults({ response, genres }) {
                     />
                     <div className="p-4 flex flex-col justify-between">
                         <div>
-                            <h2 className="text-xl font-bold">{result.title}</h2>
+                            <div className="flex justify-between">
+                                <h2 className="text-xl font-bold">{result.title}</h2>
+                                {/* <Button variant="outline" className="bg-blue" > */}
+                                <Heart 
+                                    onClick={() => handleClick(result.id)} 
+                                    fill={selectedMovies.has(result.id) ? 'var(--color-primary)' : 'var(--color-background)'} 
+                                    className="text-primary cursor-pointer" />
+                                {/* </Button> */}
+                            </div>
                             <p className="text-sm text-gray-500 mb-1">Released: {result.release_date}</p>
                             <p className="text-sm text-yellow-600 font-semibold">Average votes: {result.vote_average.toFixed(1)}</p>
                             <p className="text-sm mt-2 text-gray-700">{truncate(result.overview)}</p>

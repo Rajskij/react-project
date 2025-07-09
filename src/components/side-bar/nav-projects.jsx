@@ -1,4 +1,4 @@
-import { Camera, Folder, Move, Search } from "lucide-react";
+import { Camera, Search } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 
