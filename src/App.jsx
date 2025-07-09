@@ -11,6 +11,7 @@ import SearchResults from "@/components/search-results.jsx";
 function App() {
   const [pageName, setPageName] = useState('Page Not Found');
   const [response, setResponse] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -20,7 +21,8 @@ function App() {
             <Routes>
               <Route path="/" element={
                 <>
-                  <SearchForm setPageName={setPageName} setResponse={setResponse} />
+                  <SearchForm setPageName={setPageName} setResponse={setResponse} setIsLoading={setIsLoading}/>
+                  {isLoading && <h1 className="mt-3">Content Loading...</h1>}
                   {response && <SearchResults response={response} genres={genres} />}
                 </>
               } />

@@ -1,4 +1,4 @@
-import { Folder, Search } from "lucide-react";
+import { Camera, Folder, Move, Search } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 
@@ -19,11 +19,14 @@ export function NavProjects() {
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarHeader className="mb-5">Projects</SidebarHeader>
+      <SidebarHeader className="mb-5 flex-row">
+          <Camera />
+          <span>Film Forge</span>
+      </SidebarHeader>
       <SidebarMenu>
         {/* Them Switcher component */}
         {/* <ModeToggle isMobile={isMobile} /> */}
-        <ThemeSwitcher className='justify-around mb-5'/>
+        <ThemeSwitcher className='justify-around mb-5' />
         {/* Movie Links */}
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
@@ -34,6 +37,6 @@ export function NavProjects() {
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
-    </SidebarGroup>
+    </SidebarGroup >
   );
 }

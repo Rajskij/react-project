@@ -6,8 +6,12 @@ import { Button } from "@/components/ui/button";
 import { genres, countries, years } from "@/lib/data.js";
 import SliderEl from "./ui/slide-el";
 
-function SearchForm({ setPageName, setResponse }) {
-    const [isMoveName, setIsMoveName] = useState(null);
+const key = import.meta.env.VITE_API_KEY;
+const discoverEndpoint = 'https://api.themoviedb.org/3/discover/movie?';
+const searchEndpoint = 'https://api.themoviedb.org/3/search/movie?'
+
+function SearchForm({ setPageName, setResponse, setIsLoading }) {
+    const [moveName, setMoveName] = useState(null);
     const [formData, setFormData] = useState({});
 
     useEffect(() => {
@@ -16,15 +20,30 @@ function SearchForm({ setPageName, setResponse }) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setIsLoading(true);
+        
+        const url = moveName ? searchEndpoint : discoverEndpoint;
+        const query = moveName
+            ? `api_key=${key}&query=${moveName}`
+            : createQueryString(formData);
 
-        const query = createQueryString(formData);
-        console.log(`https://api.themoviedb.org/3/discover/movie?${query}`);
-
+        console.log(url + query);
         async function searchMovies() {
-            const response = await fetch(`https://api.themoviedb.org/3/discover/movie?${query}`);
-            const json = await response.json();
+            try {
+                const response = await fetch(url + query);
 
-            setResponse(json);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const json = await response.json();
+                setResponse(json);
+            } catch (err) {
+                console.error('Fetch error:', error);
+                setResponse([]);
+            } finally {
+                setIsLoading(false);
+            }
         }
         searchMovies();
     }
@@ -33,8 +52,7 @@ function SearchForm({ setPageName, setResponse }) {
         const searchParams = new URLSearchParams();
         const reverseArr = Array.from(genres, ([k, v]) => [v, k]);
         const reverseGenre = new Map(reverseArr);
-        const key = import.meta.env.VITE_API_KEY;
-        
+
         params.year && searchParams.append('primary_release_year', params.year);
         params.country && searchParams.append('with_origin_country', countries.get(params.country));
         params.genre && searchParams.append('with_genres', reverseGenre.get(params.genre));
@@ -45,13 +63,13 @@ function SearchForm({ setPageName, setResponse }) {
     }
 
     const props = {
-        disabled: isMoveName,
+        disabled: moveName,
         setFormData
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <SearchBar onChange={setIsMoveName} />
+            <SearchBar onChange={setMoveName} />
             <div className="grid auto-rows-min gap-4 md:grid-cols-4 mb-5">
                 <DropDown label='Genre' options={[...genres.values()]} {...props} />
                 <DropDown label='Country' options={[...countries.keys()]} {...props} />

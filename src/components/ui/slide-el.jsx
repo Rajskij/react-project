@@ -20,6 +20,7 @@ function SliderEl({ disabled, setFormData }) {
                 Minimum film rating: <strong>{rating}</strong>
             </label>
             <Slider
+                disabled={disabled}
                 value={rating}
                 onValueChange={handleChange}
                 label='Rating'
