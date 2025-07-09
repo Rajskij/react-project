@@ -10,7 +10,7 @@ const key = import.meta.env.VITE_API_KEY;
 const discoverEndpoint = 'https://api.themoviedb.org/3/discover/movie?';
 const searchEndpoint = 'https://api.themoviedb.org/3/search/movie?'
 
-function SearchForm({ setPageName, setResponse, setIsLoading }) {
+function SearchForm({ setPageName, setResponse, setIsLoading, setError }) {
     const [moveName, setMoveName] = useState(null);
     const [formData, setFormData] = useState({});
 
@@ -21,7 +21,9 @@ function SearchForm({ setPageName, setResponse, setIsLoading }) {
     function handleSubmit(e) {
         e.preventDefault();
         setIsLoading(true);
-        
+        setResponse(null);
+        setError(null);
+
         const url = moveName ? searchEndpoint : discoverEndpoint;
         const query = moveName
             ? `api_key=${key}&query=${moveName}`
@@ -31,21 +33,25 @@ function SearchForm({ setPageName, setResponse, setIsLoading }) {
         async function searchMovies() {
             try {
                 const response = await fetch(url + query);
-
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-
                 const json = await response.json();
+                if (json.results.length === 0) {
+                    throw new Error('Unfortunately, no film was found');
+                }
+                console.log(json)
                 setResponse(json);
             } catch (err) {
-                console.error('Fetch error:', error);
-                setResponse([]);
+                console.error('Fetch error:', err.message);
+                setError(err.message);
             } finally {
                 setIsLoading(false);
             }
         }
-        searchMovies();
+        // searchMovies();
+        // Testing loading condition
+        setTimeout(async () => await searchMovies(), 3000);
     }
 
     function createQueryString(params) {

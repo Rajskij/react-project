@@ -7,7 +7,6 @@ function SliderEl({ disabled, setFormData }) {
 
      useEffect(() => {
         setFormData(prev => ({ ...prev, rating: rating[0] }));
-        console.log("Current rating:", rating[0]);
     }, [rating]);
 
     function handleChange(newValue) {
@@ -24,7 +23,6 @@ function SliderEl({ disabled, setFormData }) {
                 value={rating}
                 onValueChange={handleChange}
                 label='Rating'
-                defaultValue={[33]}
                 max={10}
                 step={1}
                 className='mt-5'
