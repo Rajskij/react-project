@@ -1,18 +1,10 @@
-import {
-  Frame,
-  Map,
-  PieChart,
-} from "lucide-react"
-
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
+import { NavProjects } from "@/components/side-bar/nav-projects"
+import { NavUser } from "@/components/side-bar/nav-user"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarRail,
 } from "@/components/ui/sidebar"
-import { ModeToggle } from "@/components/mode-toggle"
 
 // This is sample data.
 const data = {
@@ -23,18 +15,15 @@ const data = {
   }
 }
 
-export function AppSidebar({
-  ...props
-}) {
+export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <NavProjects />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
-      {/* <SidebarRail /> */}
     </Sidebar>
   );
 }

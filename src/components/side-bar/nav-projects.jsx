@@ -1,4 +1,6 @@
-import { Folder } from "lucide-react";
+import { Folder, Search } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { useState } from "react";
 
 import {
   SidebarGroup,
@@ -8,23 +10,27 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "@/components/mode-toggle";
+import { ThemeSwitcher } from "../ui/shadcn-io/theme-switcher/them-switcher";
 
 export function NavProjects() {
   const { isMobile } = useSidebar()
+  const [theme, setTheme] = useState('system');
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarHeader className="mb-5">Projects</SidebarHeader>
       <SidebarMenu>
         {/* Them Switcher component */}
-        < ModeToggle isMobile={isMobile} />
+        {/* <ModeToggle isMobile={isMobile} /> */}
+        <ThemeSwitcher className='justify-around mb-5'/>
+        {/* Movie Links */}
         <SidebarMenuItem>
           <SidebarMenuButton asChild>
-            <a href='#'>
-              <Folder />
-              <span>Link to project</span>
-            </a>
+            <Link to='/'>
+              <Search />
+              <span>Search Movie</span>
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
