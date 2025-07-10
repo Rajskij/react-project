@@ -3,7 +3,7 @@ import React from "react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectLabel } from "@/components/ui/select";
 import { SelectGroup } from "@radix-ui/react-select";
 
-export function DropDown({ label, options, disabled, setFormData }) {
+export function Dropdown({ label, options, disabled, setFormData }) {
   function handleValueChange(value) {
     const idx = value.replace('option','');
     const name = label.toLowerCase();

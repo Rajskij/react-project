@@ -1,4 +1,4 @@
-import { Camera, Search } from "lucide-react";
+import { Camera, Heart, Search } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 
@@ -10,29 +10,35 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/ModeToggle";
 import { ThemeSwitcher } from "../ui/shadcn-io/theme-switcher/them-switcher";
 
-export function NavProjects() {
+export function NavSearchMovies() {
   const { isMobile } = useSidebar()
   const [theme, setTheme] = useState('system');
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarHeader className="mb-5 flex-row">
-          <Camera />
-          <span>Film Forge</span>
+      <SidebarHeader className="mb-7 flex-row">
+        <Camera />
+        <span>Film Forge</span>
       </SidebarHeader>
       <SidebarMenu>
         {/* Them Switcher component */}
         {/* <ModeToggle isMobile={isMobile} /> */}
-        <ThemeSwitcher className='justify-around mb-5' />
+        <ThemeSwitcher className='justify-around mb-3' />
         {/* Movie Links */}
         <SidebarMenuItem>
-          <SidebarMenuButton asChild>
+          <SidebarMenuButton asChild className="mb-3">
             <Link to='/'>
               <Search />
               <span>Search Movie</span>
+            </Link>
+          </SidebarMenuButton>
+          <SidebarMenuButton asChild className="mb-3">
+            <Link to='/favorites'>
+              <Heart />
+              <span>Favorite Movie</span>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>

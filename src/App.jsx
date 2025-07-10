@@ -6,8 +6,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { genres } from "@/lib/data.js";
 import { mockResponse } from "@/lib/mockResponse.js";
-import SearchForm from "@/components/search-form.jsx";
-import SearchResults from "@/components/search-results.jsx";
+import SearchForm from "@/components/SearchForm.jsx";
+import SearchResults from "@/components/SearchResults.jsx";
+import Favorites from "./components/Favorites";
 
 function App() {
   const [pageName, setPageName] = useState('Page Not Found');
@@ -38,6 +39,9 @@ function App() {
                   {error && <h1 className="text-center mt-10">{error}</h1>}
                   {response && <SearchResults response={response} genres={genres} />}
                 </>
+              } />
+              <Route path="/favorites" element={
+                <Favorites {...props} />
               } />
               <Route path="*" element={
                 <img src='https://t4.ftcdn.net/jpg/01/55/59/47/360_F_155594729_QxakT4UpwM7hL4lvOWjXnQVevxzhhOky.jpg'

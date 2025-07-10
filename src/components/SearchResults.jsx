@@ -1,22 +1,31 @@
 import { Heart } from "lucide-react";
-import { Button } from "@/components/ui/button"
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 function SearchResults({ response, genres }) {
-    const truncate = (str, max = 150) => str.length > max ? str.slice(0, max) + "..." : str;
-    const [selectedMovies, setSelectedMovies] = useState(new Set());
+    const [selectedMovies, setSelectedMovies] = useState({});
 
-    function handleClick(movieId) {
+    useEffect(() => {
+        const currentFaws = JSON.parse(localStorage.getItem('favs'));
+        setSelectedMovies(currentFaws || [])
+    }, [])
+
+    function handleClick(movieId, title) {
         setSelectedMovies(prev => {
-            const newSelection = new Set(prev);
-            if (newSelection.has(movieId)) {
-                newSelection.delete(movieId);
-            } else {
-                newSelection.add(movieId);
-                localStorage.getItem('favorite') || []
+            if (selectedMovies[movieId]) {
+                const { [movieId]: _, ...rest } = prev;
+                localStorage.setItem('favs', JSON.stringify(rest));
+
+                return rest;
             }
-            return newSelection;
+            const newFavs = { ...prev, [movieId]: title };
+            localStorage.setItem('favs', JSON.stringify(newFavs));
+
+            return newFavs;
         });
+    }
+
+    function truncate(str, max = 150) {
+        return str.length > max ? str.slice(0, max) + "..." : str;
     }
 
     return (
@@ -33,9 +42,9 @@ function SearchResults({ response, genres }) {
                             <div className="flex justify-between">
                                 <h2 className="text-xl font-bold">{result.title}</h2>
                                 {/* <Button variant="outline" className="bg-blue" > */}
-                                <Heart 
-                                    onClick={() => handleClick(result.id)} 
-                                    fill={selectedMovies.has(result.id) ? 'var(--color-primary)' : 'var(--color-background)'} 
+                                <Heart
+                                    onClick={() => handleClick(result.id, result.title)}
+                                    fill={selectedMovies[result.id] ? 'var(--color-primary)' : 'var(--color-background)'}
                                     className="text-primary cursor-pointer" />
                                 {/* </Button> */}
                             </div>

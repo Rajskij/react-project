@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { DropDown } from "@/components/dropdown";
-import { SearchBar } from "@/components/searchbar";
+import { Dropdown } from "@/components/Dropdown";
+import { SearchBar } from "@/components/Searchbar";
 import { Button } from "@/components/ui/button";
 import { genres, countries, years } from "@/lib/data.js";
 import SliderEl from "./ui/slide-el";
@@ -77,9 +77,9 @@ function SearchForm({ setPageName, setResponse, setIsLoading, setError }) {
         <form onSubmit={handleSubmit}>
             <SearchBar onChange={setMoveName} />
             <div className="grid auto-rows-min gap-4 md:grid-cols-4 mb-5">
-                <DropDown label='Genre' options={[...genres.values()]} {...props} />
-                <DropDown label='Country' options={[...countries.keys()]} {...props} />
-                <DropDown label='Year' options={years} {...props} />
+                <Dropdown label='Genre' options={[...genres.values()]} {...props} />
+                <Dropdown label='Country' options={[...countries.keys()]} {...props} />
+                <Dropdown label='Year' options={years} {...props} />
                 <SliderEl {...props} />
             </div>
             <div className="grid auto-rows-min gap-4 md:grid-cols-4">
