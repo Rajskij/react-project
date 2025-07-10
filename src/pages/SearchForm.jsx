@@ -34,7 +34,6 @@ function SearchForm({ setPageName }) {
             ? `api_key=${key}&query=${moveName}`
             : createQueryString(formData);
 
-        console.log(url + query);
         async function searchMovies() {
             try {
                 const response = await fetch(url + query);
@@ -45,7 +44,6 @@ function SearchForm({ setPageName }) {
                 if (json.results.length === 0) {
                     throw new Error('Unfortunately, no film was found');
                 }
-                console.log(json)
                 setResponse(json);
             } catch (err) {
                 console.error('Fetch error:', err.message);
