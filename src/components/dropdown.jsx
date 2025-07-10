@@ -7,10 +7,7 @@ export function Dropdown({ label, options, disabled, setFormData }) {
   function handleValueChange(value) {
     const idx = value.replace('option','');
     const name = label.toLowerCase();
-    setFormData(prev => ({
-      ...prev, 
-      [name]: options[idx]
-    }));
+    setFormData(prev => ({ ...prev, [name]: options[idx] }));
   }
 
   return (
