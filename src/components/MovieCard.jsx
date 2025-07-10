@@ -7,7 +7,7 @@ export function MovieCard( {id, imgUrl, title, date, votes, overview, genreIds, 
     return (
         <div key={id} className="flex flex-col md:flex-row bg-muted/50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow mt-3">
             <img src={imgUrl} alt={title} className="w-full md:w-auto md:h-[300px] object-cover" />
-            <div className="p-4 flex flex-col justify-between">
+            <div className="p-4 w-full flex flex-col justify-between">
                 <div>
                     <div className="flex justify-between">
                         <h2 className="text-xl font-bold">{title}</h2>
