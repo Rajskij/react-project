@@ -3,16 +3,21 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "@/components/Dropdown";
 import { SearchBar } from "@/components/Searchbar";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton"
+import { SearchResults } from "@/components/SearchResults.jsx";
 import { genres, countries, years } from "@/lib/data.js";
-import SliderEl from "./ui/slide-el";
+import SliderEl from "../components/ui/slide-el";
 
 const key = import.meta.env.VITE_API_KEY;
 const discoverEndpoint = 'https://api.themoviedb.org/3/discover/movie?';
 const searchEndpoint = 'https://api.themoviedb.org/3/search/movie?'
 
-function SearchForm({ setPageName, setResponse, setIsLoading, setError }) {
+function SearchForm({ setPageName }) {
     const [moveName, setMoveName] = useState(null);
     const [formData, setFormData] = useState({});
+    const [response, setResponse] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         setPageName('Move Search');
@@ -49,9 +54,9 @@ function SearchForm({ setPageName, setResponse, setIsLoading, setError }) {
                 setIsLoading(false);
             }
         }
-        // searchMovies();
+        searchMovies();
         // Testing loading condition
-        setTimeout(async () => await searchMovies(), 3000);
+        // setTimeout(async () => await searchMovies(), 3000);
     }
 
     function createQueryString(params) {
@@ -85,6 +90,13 @@ function SearchForm({ setPageName, setResponse, setIsLoading, setError }) {
             <div className="grid auto-rows-min gap-4 md:grid-cols-4">
                 <Button className="w-full">Search</Button>
             </div>
+            {/* Response Components */}
+            {isLoading && (<>
+                <Skeleton className='h-[600px] md:h-[300px] mt-3' />
+                <Skeleton className='h-[600px] md:h-[300px] mt-3' />
+            </>)}
+            {error && <h1 className="text-center mt-10">{error}</h1>}
+            {response && <SearchResults response={response} />}
         </form>
     );
 }

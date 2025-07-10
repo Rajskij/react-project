@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
+
 import { Skeleton } from "@/components/ui/skeleton"
+import { MovieCard } from "@/components/MovieCard";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { truncate } from "@/lib/utils";
 
 const key = import.meta.env.VITE_API_KEY;
 
@@ -47,7 +50,21 @@ function Favorites({ setPageName }) {
             }
         }
 
-        // getMovie();
+        getMovie();
+        // Testing loading condition
+        // setTimeout(async () => await getMovie(), 2000);
+    }
+
+    function buildProps(res) {
+        console.log(Object.entries(res.genres).map(([key, val]) => val.id))
+        return {
+            imgUrl: `https://image.tmdb.org/t/p/w500${res.poster_path}`,
+            title: res.title,
+            date: res.release_date,
+            votes: res.vote_average.toFixed(1),
+            overview: truncate(res.overview),
+            genreIds: Object.entries(res.genres).map(([key, value]) => value.id)
+        }
     }
 
     return (
@@ -55,7 +72,7 @@ function Favorites({ setPageName }) {
             type="single"
             collapsible
             className="w-full"
-        // defaultValue="item-1"
+            // defaultValue="item-1"
         >
             {
                 Object.entries(favorites).map(([key, value], idx) => (
@@ -63,15 +80,8 @@ function Favorites({ setPageName }) {
                         <AccordionTrigger onClick={() => handleClick(key)} >{value}</AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-4 text-balance">
                             {isLoading && <Skeleton className='h-[600px] md:h-[300px]' />}
-                            <p>
-                                Our flagship product combines cutting-edge technology with sleek
-                                design. Built with premium materials, it offers unparalleled
-                                performance and reliability.
-                            </p>
-                            <p>
-                                Key features include advanced processing capabilities, and an
-                                intuitive user interface designed for both beginners and experts.
-                            </p>
+                            {response && <MovieCard id={key} {...buildProps(response)} />}
+                            {error && <h1 className="text-center mt-10">{error}</h1>}
                         </AccordionContent>
                     </AccordionItem>
                 ))
