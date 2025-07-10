@@ -19,10 +19,12 @@ export function NavSearchMovies() {
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarHeader className="mb-7 flex-row">
-        <Camera />
-        <span>Film Forge</span>
-      </SidebarHeader>
+      <Link to='/'>
+        <SidebarHeader className="mb-7 flex-row">
+          <Camera />
+          <span>Film Forge</span>
+        </SidebarHeader>
+      </Link>
       <SidebarMenu>
         {/* Them Switcher component */}
         {/* <ModeToggle isMobile={isMobile} /> */}
