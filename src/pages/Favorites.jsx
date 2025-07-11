@@ -9,6 +9,10 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { truncate } from "@/lib/utils";
+import { Heart } from "lucide-react";
+import PageHeader from "@/components/PageHeader";
+import { Link } from "react-router-dom";
+import { useFavorites } from "@/hooks/useFavorites";
 
 const key = import.meta.env.VITE_API_KEY;
 
@@ -16,29 +20,15 @@ function Favorites({ setPageName }) {
     const [response, setResponse] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const favorites = JSON.parse(localStorage.getItem('favs'));
-    const [selectedMovies, setSelectedMovies] = useState();
+    const [ids, setIds] = useState({});
+    // const favorites = JSON.parse(localStorage.getItem('favs'));
+    // const [selectedMovies, setSelectedMovies] = useState();
+    const {state, dispatch} = useFavorites();
 
     useEffect(() => {
-        const currentFaws = JSON.parse(localStorage.getItem('favs'));
-        setSelectedMovies(currentFaws || {})
         setPageName('Favorite Movies');
+        setResponse(null);
     }, [])
-
-    function handleRemoveFavs(movieId, title) {
-        setSelectedMovies(prev => {
-            if (selectedMovies[movieId]) {
-                const { [movieId]: _, ...rest } = prev;
-                localStorage.setItem('favs', JSON.stringify(rest));
-
-                return rest;
-            }
-            const newFavs = { ...prev, [movieId]: title };
-            localStorage.setItem('favs', JSON.stringify(newFavs));
-
-            return newFavs;
-        });
-    }
 
     function handlePreviewMovie(movieId) {
         setResponse(null);
@@ -80,8 +70,8 @@ function Favorites({ setPageName }) {
             votes: res.vote_average.toFixed(1),
             overview: truncate(res.overview),
             genreIds: Object.entries(res.genres).map(([key, value]) => value.id),
-            selectedMovies,
-            handleClick: handleRemoveFavs
+            state,
+            dispatch
         }
     }
 
@@ -90,11 +80,15 @@ function Favorites({ setPageName }) {
             type="single"
             collapsible
             className="w-full"
+            onValueChange={(value) => handlePreviewMovie(value)}
         // defaultValue="item-1"
         >
-            {favorites && Object.entries(favorites).map(([key, value], idx) => (
-                <AccordionItem key={key} value={`item-${idx}`}>
-                    <AccordionTrigger onClick={() => handlePreviewMovie(key)} >{value}</AccordionTrigger>
+            <PageHeader title='Check out your favorite movies' message='That is the list of your favorite movies'>
+                <Heart className="mr-3" />
+            </PageHeader>
+            {state && Object.entries(state).map(([key, value], idx) => (
+                <AccordionItem key={key} value={key}>
+                    <AccordionTrigger>{value}</AccordionTrigger>
                     <AccordionContent className="flex flex-col gap-4 text-balance">
                         {isLoading && <Skeleton className='h-[600px] md:h-[300px]' />}
                         {response && <MovieCard id={key} {...buildProps(response)} />}
