@@ -20,7 +20,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<SearchForm setPageName={setPageName} />} />
                 <Route path="/favorites" element={<Favorites setPageName={setPageName} />} />
-                <Route path="/details/:id" element={<FilmDetails />} />
+                <Route path="/details/:id" element={<FilmDetails pageName={pageName}/>} />
                 <Route path="*" element={
                   <img src='https://t4.ftcdn.net/jpg/01/55/59/47/360_F_155594729_QxakT4UpwM7hL4lvOWjXnQVevxzhhOky.jpg'
                     alt="404 Page not found" />

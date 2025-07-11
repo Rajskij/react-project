@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const key = import.meta.env.VITE_API_KEY;
 
-function FilmDetails() {
+function FilmDetails({ pageName }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
     const [response, setResponse] = useState();
@@ -47,7 +47,7 @@ function FilmDetails() {
             <button onClick={() => window.history.back()}
                     className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
                 <ArrowLeft />
-                Back to previous page
+                Back to {pageName}
             </button>
             {isLoading && <Skeleton className='h-[600px] md:h-[300px]' />}
             {response &&
