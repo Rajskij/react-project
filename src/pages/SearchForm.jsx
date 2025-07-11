@@ -70,7 +70,7 @@ function SearchForm({ setPageName }) {
     return (
         <div>
             {state.length < 1 &&
-                <PageHeader title='Hi, this is Film Forge' message='what do you want to search tody?'>
+                <PageHeader title='Welcome to Film Forge' message='what would you like to search today?'>
                     <FilmIcon className="mr-3" />
                 </PageHeader>}
             <form onSubmit={handleSubmit}>

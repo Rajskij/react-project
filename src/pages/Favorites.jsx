@@ -83,7 +83,7 @@ function Favorites({ setPageName }) {
             onValueChange={(value) => handlePreviewMovie(value)}
         // defaultValue="item-1"
         >
-            <PageHeader title='Check out your favorite movies' message='That is the list of your favorite movies'>
+            <PageHeader title='Your Movie Collection' message="browse all the films you've saved as favorites">
                 <Heart className="mr-3" />
             </PageHeader>
             {state && Object.entries(state).map(([key, value], idx) => (
