@@ -15,7 +15,6 @@ const data = {
 }
 
 export function AppSidebar() {
-
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
