@@ -1,12 +1,9 @@
 import { Heart } from "lucide-react";
 import { genres } from "@/lib/data.js";
-import { useFavorites } from "@/hooks/useFavorites";
 import { Link } from "react-router-dom";
+import { convertDate } from "@/lib/utils";
 
 export function MovieCard({ id, imgUrl, title, date, votes, overview, genreIds, state, dispatch }) {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' }
-    const localDate = new Date(date).toLocaleDateString('en-US', options);
-
     function handleClick(movieId, title) {
         if (state[movieId]) {
             dispatch({ type: 'REMOVE_FAVORITE', payload: { id: movieId, title } });
@@ -16,7 +13,7 @@ export function MovieCard({ id, imgUrl, title, date, votes, overview, genreIds, 
     }
 
     return (
-        <div key={id} className="flex flex-col md:flex-row bg-muted/50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow mt-3">
+        <div className="flex flex-col md:flex-row bg-muted/50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow mt-3">
             <Link to={`/details/${id}`} >
                 <img src={imgUrl} alt={title} className="w-full md:w-auto md:h-[300px] object-cover" />
             </Link>
@@ -31,7 +28,7 @@ export function MovieCard({ id, imgUrl, title, date, votes, overview, genreIds, 
                             fill={state[id] ? 'var(--color-primary)' : 'var(--color-background)'}
                             className="text-primary cursor-pointer" />}
                     </div>
-                    <p className="text-sm text-gray-500 mb-1">Released: {localDate}</p>
+                    <p className="text-sm text-gray-500 mb-1">Released: {convertDate(date)}</p>
                     <p className="text-sm text-yellow-600 font-semibold">Average votes: {votes}</p>
                     <p className="text-sm mt-2 text-gray-700">{overview}</p>
                 </div>

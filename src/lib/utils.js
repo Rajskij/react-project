@@ -23,3 +23,9 @@ export function createQueryString(params, key) {
 
   return searchParams.toString();
 }
+
+export function convertDate(date) {
+  const options = { year: 'numeric', month: 'short', day: 'numeric' }
+  const localDate = new Date(date).toLocaleDateString('en-US', options);
+  return localDate;
+}
