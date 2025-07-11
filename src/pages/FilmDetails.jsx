@@ -22,7 +22,7 @@ function FilmDetails({ pageName }) {
                 const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${key}`);
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('The network connection encountered an issue during the response');
                 }
 
                 const json = await response.json();
@@ -40,16 +40,17 @@ function FilmDetails({ pageName }) {
         }
 
         getMovie();
+        // Testing loading condition
+        // setTimeout(async () => await getMovie(), 2000);
     }, []);
 
     return (
         <>
             <button onClick={() => window.history.back()}
-                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
                 <ArrowLeft />
                 Back to {pageName}
             </button>
-            {isLoading && <Skeleton className='h-[600px] md:h-[300px]' />}
             {response &&
                 <div className="flex flex-col md:flex-row bg-muted/50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow mt-3">
                     <div className="md:w-1/3 p-4 flex justify-center">
@@ -106,7 +107,8 @@ function FilmDetails({ pageName }) {
                         </div>
                     </div>
                 </div>}
-            {error && <h1 className="text-center mt-10">{error}</h1>}
+            {isLoading && <Skeleton className='h-[1200px] md:h-[500px]' />}
+            {error && <p className="text-red-400 text-center my-5">{error}</p>}
         </>
     );
 }

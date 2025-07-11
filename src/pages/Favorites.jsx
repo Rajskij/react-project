@@ -40,7 +40,7 @@ function Favorites({ setPageName }) {
                 const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${key}`);
 
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('The network connection encountered an issue during the response');
                 }
 
                 const json = await response.json();
@@ -92,7 +92,7 @@ function Favorites({ setPageName }) {
                     <AccordionContent className="flex flex-col gap-4 text-balance">
                         {isLoading && <Skeleton className='h-[600px] md:h-[300px]' />}
                         {response && <MovieCard id={key} {...buildProps(response)} />}
-                        {error && <h1 className="text-center mt-10">{error}</h1>}
+                        {error && <p className="text-red-400 text-center my-5">{error}</p>}
                     </AccordionContent>
                 </AccordionItem>
             ))}

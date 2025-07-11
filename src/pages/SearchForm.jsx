@@ -42,7 +42,7 @@ function SearchForm({ setPageName }) {
             try {
                 const response = await fetch(url + query);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('The network connection encountered an issue during the response');
                 }
                 const json = await response.json();
                 if (json.results.length === 0) {
@@ -90,7 +90,7 @@ function SearchForm({ setPageName }) {
                 <Skeleton className='h-[600px] md:h-[300px] mt-3' />
                 <Skeleton className='h-[600px] md:h-[300px] mt-3' />
             </>)}
-            {error && <h1 className="text-center mt-10">{error}</h1>}
+            {error && <h1 className="text-red-400 text-center mt-10">{error}</h1>}
             {state && <SearchResults response={state} />}
         </div>
     );
