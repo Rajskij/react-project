@@ -16,10 +16,17 @@ import { ThemeSwitcher } from "../ui/shadcn-io/theme-switcher/them-switcher";
 export function NavSearchMovies() {
   const { isMobile } = useSidebar()
   const [theme, setTheme] = useState('system');
+  const { toggleSidebar } = useSidebar()
+
+  function closeIfMobile() {
+    if (isMobile()) {
+      toggleSidebar();
+    }
+  }
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <Link to='/'>
+      <Link to='/' onClick={() => closeIfMobile()}>
         <SidebarHeader className="mb-7 flex-row">
           <Camera />
           <span>Film Forge</span>
@@ -32,13 +39,13 @@ export function NavSearchMovies() {
         {/* Movie Links */}
         <SidebarMenuItem>
           <SidebarMenuButton asChild className="mb-3">
-            <Link to='/'>
+            <Link to='/' onClick={() => closeIfMobile()}>
               <Search />
               <span>Search Movie</span>
             </Link>
           </SidebarMenuButton>
           <SidebarMenuButton asChild className="mb-3">
-            <Link to='/favorites'>
+            <Link to='/favorites' onClick={() => closeIfMobile()}>
               <Heart />
               <span>Favorite Movie</span>
             </Link>
