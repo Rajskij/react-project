@@ -23,7 +23,7 @@ function Favorites({ setPageName }) {
     const [ids, setIds] = useState({});
     // const favorites = JSON.parse(localStorage.getItem('favs'));
     // const [selectedMovies, setSelectedMovies] = useState();
-    const {state, dispatch} = useFavorites();
+    const { state, dispatch } = useFavorites();
 
     useEffect(() => {
         setPageName('Favorite Movies');
@@ -31,6 +31,9 @@ function Favorites({ setPageName }) {
     }, [])
 
     function handlePreviewMovie(movieId) {
+        if (!movieId) {
+            return;
+        }
         setResponse(null);
         setIsLoading(true);
         setError(null);
