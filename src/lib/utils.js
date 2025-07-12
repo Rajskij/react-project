@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge"
-import { genres } from "./data";
+import { countries, genres } from "./data";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));

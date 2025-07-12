@@ -22,7 +22,7 @@ export default function MainPage({ children, pageName }) {
           </div>
         </header>
         <div className="flex flex-col flex-1 justify-center gap-4 p-4 pt-0">
-          <div className="max-w-250 mx-auto w-full">
+          <div className="max-w-200 mx-auto w-full">
             {children}
           </div>
         </div>
