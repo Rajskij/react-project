@@ -8,23 +8,25 @@ import {
 
 export default function MainPage({ children, pageName }) {
   return (
-      <SidebarProvider className='max-w-250 justify-self-center '>
-        <AppSidebar />
-        <SidebarInset >
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-            <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
-              <Separator
-                orientation="vertical"
-                className="mr-2 data-[orientation=vertical]:h-4"
-              />
-              <h1>{pageName}</h1>
-            </div>
-          </header>
-          <div className="flex justify-center flex-1 flex-col gap-4 p-4 pt-0">
+    <SidebarProvider >
+      <AppSidebar />
+      <SidebarInset >
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 data-[orientation=vertical]:h-4"
+            />
+            <h1>{pageName}</h1>
+          </div>
+        </header>
+        <div className="flex flex-col flex-1 justify-center gap-4 p-4 pt-0">
+          <div className="max-w-250 mx-auto w-full">
             {children}
           </div>
-        </SidebarInset>
-      </SidebarProvider>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
